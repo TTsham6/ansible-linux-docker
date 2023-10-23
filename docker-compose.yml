@@ -4,7 +4,6 @@ services:
   ansible:
     container_name: ansible
     build: "./controller"
-    privileged: true
     volumes:
       - "./controller/ansible:/ansible"
     networks:
@@ -13,7 +12,6 @@ services:
   target:
     container_name: target
     build: ./target
-    privileged: true
     networks:
       - default
     ports:

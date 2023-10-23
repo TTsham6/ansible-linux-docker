@@ -5,8 +5,6 @@
 $ cd ansible-linux-docker
 $ docker compose up -d target
 $ docker compose ps
-NAME              IMAGE           COMMAND                       SERVICE   CREATED          STATUS          PORTS
-docker-target-1   docker-target   "/bin/sh -c \"/sbin/init\""   target    26 seconds ago   Up 25 seconds   22/tcp
 ```
 
 ## コンテナのAnsibleを実行する
@@ -29,5 +27,37 @@ $ docker compose run --rm ansible ansible target -i /ansible/hosts.yml -m debug 
 $ docker compose run --rm ansible ansible target -i /ansible/hosts.yml -m ping -u root
 ```
 
+### プレイブックを適用する
+
+
+#### 1.[/controller/ansible/playbook/roles](/controller/ansible/playbook/roles)配下に<Role名>/tasks/main.ymlでRoleを作成
+
+##### 2.[site.yml](controller/ansible/playbook/site.yml)を編集しRoleを読み込む
+
+```yml
+- hosts: target
+  roles:
+    - your_role_name # ここに追加
+```
+
+#### 3. ansible-playbookコマンドを実行
+```sh
+$ docker compose run --rm ansible ansible-playbook /ansible/playbook/site.yml -i /ansible/hosts.yml -u root
+```
+
+実行結果例
+```
+PLAY [target] *****************************************************************************************************************************
+ok: [target]
+
+TASK [test : echo test] *******************************************************************************************************************
+changed: [target]
+
+TASK [yum : install apache] ***************************************************************************************************************
+changed: [target]
+
+PLAY RECAP ********************************************************************************************************************************
+target                     : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
 
 
