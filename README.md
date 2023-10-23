@@ -2,7 +2,7 @@
 
 ## 管理対象コンテナを起動
 ```sh
-$ cd ansible-linux-docker/docker
+$ cd ansible-linux-docker
 $ docker compose up -d target
 $ docker compose ps
 NAME              IMAGE           COMMAND                       SERVICE   CREATED          STATUS          PORTS
