@@ -1,4 +1,4 @@
-# docker composeの使い方
+# Ansibleコンテナ
 
 ## 管理対象コンテナを起動
 ```sh
@@ -7,8 +7,8 @@ $ docker compose up -d target
 $ docker compose ps
 ```
 
-## コンテナのAnsibleを実行する
-基本的にdocker comose run --rm でタスク実行をする。
+## コンテナ内のAnsibleを実行する
+docker comose run --rm ansible <Ansibleのコマンド>　でタスク実行をする。
 
 ### インベントリ設定の確認
 
@@ -32,7 +32,7 @@ $ docker compose run --rm ansible ansible target -i /ansible/hosts.yml -m ping -
 
 #### 1.[/controller/ansible/playbook/roles](/controller/ansible/playbook/roles)配下に<Role名>/tasks/main.ymlでRoleを作成
 
-##### 2.[site.yml](controller/ansible/playbook/site.yml)を編集しRoleを読み込む
+#### 2.[site.yml](controller/ansible/playbook/site.yml)を編集しRoleを読み込む
 
 ```yml
 - hosts: target
@@ -40,7 +40,7 @@ $ docker compose run --rm ansible ansible target -i /ansible/hosts.yml -m ping -
     - your_role_name # ここに追加
 ```
 
-#### 3. ansible-playbookコマンドを実行
+#### 3.ansible-playbookコマンドを実行
 ```sh
 $ docker compose run --rm ansible ansible-playbook /ansible/playbook/site.yml -i /ansible/hosts.yml -u root
 ```
